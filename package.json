@@ -1,0 +1,29 @@
+{
+  "name": "wcli",
+  "version": "0.0.1",
+  "description": "A javascript CLI util with commands, arguments and options",
+  "main": "index.js",
+  "scripts": {
+    "test": "jasmine-node ./*_spec.js"
+  },
+  "keywords": [
+    "cli",
+    "util",
+    "command",
+    "subcommand"
+  ],
+  "author": "Walter Dal Mut <walter.dalmut@gmail.com>",
+  "license": "MIT",
+  "devDependencies": {
+    "jasmine-node": "^1.14.5",
+    "memory-streams": "^0.1.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:wdalmut/wcli.git"
+  },
+  "dependencies": {
+    "mustache": "^2.2.1",
+    "underscore": "^1.8.3"
+  }
+}
