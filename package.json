@@ -23,7 +23,6 @@
     "url": "git@github.com:wdalmut/wcli.git"
   },
   "dependencies": {
-    "mustache": "^2.2.1",
     "underscore": "^1.8.3"
   }
 }
