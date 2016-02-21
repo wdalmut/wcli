@@ -1,4 +1,5 @@
 var _ = require('underscore');
+var color = require('colors');
 
 module.exports = function(def) {
   return {
@@ -28,15 +29,28 @@ module.exports = function(def) {
       }
       return isHelp;
     },
+    "exit": function(intCode) {
+      process.exit(intCode);
+    },
+    "fatal": function(message) {
+      this.error(message);
+      this.exit(1);
+    },
+    "error": function(message) {
+      this.stdout.write(message.underline.red + "\n");
+    },
+    "info": function(message) {
+      this.stdout.write(message + "\n");
+    },
     "showHelp": function(command, message) {
       this.stdout.write("USAGE: " + this.app + " [COMMAND] [OPTIONS] [args...]\n\n");
 
       if (message) {
-        this.stdout.write("ERROR: " + message + "\n");
+        this.error("ERROR: " + message + "\n");
       }
       this.stdout.write("\n");
       if (!command) {
-        this.stdout.write("Commands:\n");
+        this.stdout.write("Commands:\n".bold);
         _.each(this.commands, function(value, key) {
           this.showCommandHelp(key);
         }, this);

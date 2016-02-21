@@ -47,4 +47,19 @@ $ node myapp.js --help
 $ node myapp.js serve -h
 ```
 
+## Console and colors
+
+You have few helpers to write strings in your console
+
+ * info - normal text
+ * error - underline and red
+ * fatal - error + exit with code 1
+
+This project includes [colors.js](https://github.com/marak/colors.js/) in order
+to write down colored information.
+
+```js
+cli.info("hello".inverse);
+```
+
 

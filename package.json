@@ -1,6 +1,6 @@
 {
   "name": "wcli",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "A javascript CLI util with commands, arguments and options",
   "main": "index.js",
   "scripts": {
@@ -23,6 +23,7 @@
     "url": "git@github.com:wdalmut/wcli.git"
   },
   "dependencies": {
+    "colors": "^1.1.2",
     "underscore": "^1.8.3"
   }
 }
