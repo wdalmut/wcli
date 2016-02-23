@@ -172,7 +172,7 @@ module.exports = function(def) {
       return this.userCommandRun(command, options, commandArgs);
     },
     "userCommandRun": function(command, options, args) {
-      return this[command].apply(this, [options, args]);
+      return this[command](options, args);
     },
   };
 };
