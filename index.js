@@ -14,7 +14,7 @@ module.exports = function(def) {
           def[command][longKey] = def[command][longKey].concat(base.slice(def[command][longKey].length));
           options[command][longKey] = _.object(['key', 'help', 'default'], def[command][longKey]);
         }, this);
-      }, this);
+     }, this);
       return options;
     }(def),
     "options": {},
@@ -110,19 +110,9 @@ module.exports = function(def) {
       args[commandIndex] = false;
       args = _.compact(args);
 
-      return this.preapareTheArgumentList(command, args);
+      return this.resolveTheOptionsList(command, args);
     },
-    "preapareTheArgumentList": function(command, args) {
-      // prepare args
-      var commandArgs = _.filter(args, function(arg) {
-        if (!arg.match(/^[-]{1,2}/)) {
-          return true;
-        }
-        return false;
-      });
-      return this.resolveTheOptionsList(command, commandArgs, args);
-    },
-    "resolveTheOptionsList": function(command, commandArgs, args) {
+    "resolveTheOptionsList": function(command, args) {
       _.each(args, function(key, index) {
         if (!key.match(/^([-]{1}[^-]{1})/g)) {
           return;
@@ -136,9 +126,9 @@ module.exports = function(def) {
        }, this);
       }, this);
 
-      return this.prepareTheOptionsList(command, commandArgs, args);
+      return this.prepareTheOptionsList(command, args);
     },
-    "prepareTheOptionsList": function(command, commandArgs, args) {
+    "prepareTheOptionsList": function(command, args) {
       // prepare defaults
       var options = function(commandOptions) {
         var options = {};
@@ -169,7 +159,27 @@ module.exports = function(def) {
         }
       }
 
-      return this.userCommandRun(command, options, commandArgs);
+      return this.prepareTheArgumentList(command, options, args);
+    },
+    "prepareTheArgumentList": function(command, options, args) {
+      var drops = [];
+      _.each(options, function(val, key) {
+        if (val) {
+          drops.push(val);
+          drops.push("--" + key);
+        }
+      });
+
+      args = _.difference(args, drops);
+
+      // prepare args
+      var commandArgs = _.filter(args, function(arg) {
+        if (!arg.match(/^[-]{1,2}/)) {
+          return true;
+        }
+        return false;
+      });
+      return this.userCommandRun(command, options, args);
     },
     "userCommandRun": function(command, options, args) {
       return this[command](options, args);

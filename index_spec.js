@@ -47,6 +47,7 @@ describe("The whole cli process", function() {
 
     expect(cli.http.calls.length).toBe(1);
     expect(cli.http.calls[0].args[0]).toEqual({port: 8080, log: false, serve: "./public", });
+    expect(cli.http.calls[0].args[1]).toEqual([]);
   });
 
   it("should parse boolean options", function() {
@@ -56,6 +57,7 @@ describe("The whole cli process", function() {
 
     expect(cli.http.calls.length).toBe(1);
     expect(cli.http.calls[0].args[0]).toEqual({port: 8080, log: true, serve: "./public", });
+    expect(cli.http.calls[0].args[1]).toEqual([]);
   });
 
   it("should parse valued options", function() {
@@ -112,10 +114,21 @@ describe("The whole cli process", function() {
 
     expect(cli.http.calls.length).toBe(1);
     expect(cli.http.calls[0].args[0]).toEqual({port: 8080, log: true, serve: "./public", });
+    expect(cli.http.calls[0].args[1]).toEqual([]);
   });
 
   it("should shows the help on missing option", function() {
     cli.parse(["http", "-k"]);
     expect(cli.stdout.toString()).toMatch(/missing option: k/i);
+  });
+
+  it("should parse valued options and arguments", function() {
+    spyOn(cli, "http");
+
+    cli.parse(["http", "--serve", "/tmp/public", "path/to/something"]);
+
+    expect(cli.http.calls.length).toBe(1);
+    expect(cli.http.calls[0].args[0]).toEqual({port: 8080, log: false, serve: "/tmp/public", });
+    expect(cli.http.calls[0].args[1]).toEqual(["path/to/something"]);
   });
 });
