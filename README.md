@@ -62,4 +62,28 @@ to write down colored information.
 cli.info("hello".inverse);
 ```
 
+## Init hook
+
+You can execute a script before your command
+
+```js
+var Cli = require('wcli');
+cli = new Cli({
+    "serve": {
+        log: ["l", 'Enable logging'],
+        port: ['p', 'Listen on port', 8080]
+    },
+    "dump": {
+        path: ["p", "Store data at path", "/tmp"],
+    },
+});
+
+cli.init = function() {
+    // do whatever you want and return the cli
+
+    return this;
+};
+
+...
+```
 

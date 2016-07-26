@@ -64,8 +64,11 @@ module.exports = function(def) {
         this.stdout.write("    " + "--" + optName + ((def.key) ? ", -"+def.key : "") + " " + def.help + "\n");
       }, this);
     },
+    "init": function(args) {
+      return this;
+    },
     "parse": function(args) {
-      return this.findTheCommand(args);
+      return this.init(args).findTheCommand(args);
     },
     "findTheCommand": function(args) {
       var command = function(args) {

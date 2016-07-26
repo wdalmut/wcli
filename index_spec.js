@@ -131,4 +131,12 @@ describe("The whole cli process", function() {
     expect(cli.http.calls[0].args[0]).toEqual({port: 8080, log: false, serve: "/tmp/public", });
     expect(cli.http.calls[0].args[1]).toEqual(["path/to/something"]);
   });
+
+  it("should call the init script", function() {
+    spyOn(cli, 'init').andCallThrough();
+
+    cli.parse(["http", "--serve", "/tmp/public", "path/to/something"]);
+
+    expect(cli.init.calls.length).toBe(1);
+  });
 });
